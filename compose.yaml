@@ -7,7 +7,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - INSTANCE_NAME=app0
+      - INSTANCE_NUM=0
       - app-instance=0
     networks:
       - haproxy-showcase-network
@@ -30,7 +30,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - INSTANCE_NAME=app1
+      - INSTANCE_NUM=1
       - app-instance=1
     networks:
       - haproxy-showcase-network
@@ -50,7 +50,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - INSTANCE_NAME=app2
+      - INSTANCE_NUM=2
       - app-instance=2
     networks:
       - haproxy-showcase-network
@@ -70,7 +70,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - INSTANCE_NAME=app3
+      - INSTANCE_NUM=3
       - app-instance=3
     networks:
       - haproxy-showcase-network
@@ -90,7 +90,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - INSTANCE_NAME=app4
+      - INSTANCE_NUM=4
       - app-instance=4
     networks:
       - haproxy-showcase-network
@@ -110,7 +110,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - INSTANCE_NAME=app5
+      - INSTANCE_NUM=5
       - app-instance=5
     networks:
       - haproxy-showcase-network
@@ -164,8 +164,8 @@ services:
     command: >
       -f /mnt/locust/locustfile.py
       --host=http://app0:3000
-      --users=200
-      --spawn-rate=100
+      --users=500
+      --spawn-rate=250
       --run-time=20s
       --html=/tmp/locust_report_direct.html
       --csv=/tmp/locust_data_direct
@@ -191,8 +191,8 @@ services:
     command: >
       -f /mnt/locust/locustfile.py
       --host=http://haproxy:80
-      --users=200
-      --spawn-rate=100
+      --users=500
+      --spawn-rate=250
       --run-time=20s
       --html=/tmp/locust_report_haproxy.html
       --csv=/tmp/locust_data_haproxy

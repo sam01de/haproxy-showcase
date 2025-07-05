@@ -1,0 +1,22 @@
+A) Quick introductory example to grab attention (~ 1-2 min)
+	i) Startup 5 local servers with simple hello world applications in containers, start HAProxy in round robin and show how one server
+	after the other is chosen
+	ii) 2-3 Introductory Sentences about HAProxy
+
+B) Recap Background (~ 1-2 mins)
+   i) Proxy/Reverse Proxy
+   ii) Load balancing
+   
+C) HAProxy (~ 5 mins)
+   i) Introduction - Releasedate, tech stack, ...
+   ii) Configuration - Which options (Layer 4 vs. 7, ...), and which make sense when?
+   iii) Some Benchmark-Stats
+   
+   
+D) Quick comparison: nginx vs HAProxy (~2 mins) - Practically Relevant for the audience, many probably use nginx
+   i) Load Balancing Performance
+   ii) Features
+   
+E) Showcase (~5 mins) - Extend on example in A), show config details, change something etc. All 5 local servers run in resource-restricted containers. Run "Locust" to show performance differences between a single server and load balanced server and playing around with the config a bit - e.g. hold connections for a random time by servers and compare "roundRobin" to "leastconn"
+
+F) Show QR Code with which audience can download docker compose file to run the exemplary setup themsels if they want

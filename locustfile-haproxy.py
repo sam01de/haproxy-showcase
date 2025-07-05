@@ -8,6 +8,6 @@ class HAProxyLoadBalancerUser(HttpUser):
     @task(1)
     def test_proxy_load_balancing(self):
         """Test HAProxy load balancing via /proxytest endpoint"""
-        with self.client.get("/proxytest", name="HAProxy: /proxytest") as response:
+        with self.client.get("/proxytest?distributedelay=false", name="HAProxy: /proxytest") as response:
             if response.status_code == 200:
                 pass  # Success 
