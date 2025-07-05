@@ -1,0 +1,24 @@
+{
+  "name": "haproxy-showcase",
+  "version": "1.0.0",
+  "description": "Small sample project to showcase HAProxy",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "git+https://github.com/sam01de/haproxy-showcase.git",
+  "keywords": [
+    "HAProxy"
+  ],
+  "author": "Samuel Sacher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sam01de/haproxy-showcase/issues"
+  },
+  "homepage": "https://github.com/sam01de/haproxy-showcase#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

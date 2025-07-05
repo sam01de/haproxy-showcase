@@ -1,0 +1,201 @@
+services:
+
+  #not managed by haproxy
+  app0:
+    build: .
+    container_name: haproxy-showcase-app0
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - INSTANCE_NAME=app0
+      - app-instance=0
+    networks:
+      - haproxy-showcase-network
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'  # 10% of a core - reasonable constraint
+          memory: 128M
+        reservations:
+          cpus: '0.05'
+          memory: 64M
+
+  #managed by haproxy
+  app1:
+    build: .
+    container_name: haproxy-showcase-app1
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - INSTANCE_NAME=app1
+      - app-instance=1
+    networks:
+      - haproxy-showcase-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'  # 10% of a core - reasonable constraint
+          memory: 128M
+        reservations:
+          cpus: '0.05'
+          memory: 64M
+
+  app2:
+    build: .
+    container_name: haproxy-showcase-app2
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - INSTANCE_NAME=app2
+      - app-instance=2
+    networks:
+      - haproxy-showcase-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'  # 10% of a core - reasonable constraint
+          memory: 128M
+        reservations:
+          cpus: '0.05'
+          memory: 64M
+
+  app3:
+    build: .
+    container_name: haproxy-showcase-app3
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - INSTANCE_NAME=app3
+      - app-instance=3
+    networks:
+      - haproxy-showcase-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'  # 10% of a core - reasonable constraint
+          memory: 128M
+        reservations:
+          cpus: '0.05'
+          memory: 64M
+
+  app4:
+    build: .
+    container_name: haproxy-showcase-app4
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - INSTANCE_NAME=app4
+      - app-instance=4
+    networks:
+      - haproxy-showcase-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'  # 10% of a core - reasonable constraint
+          memory: 128M
+        reservations:
+          cpus: '0.05'
+          memory: 64M
+
+  app5:
+    build: .
+    container_name: haproxy-showcase-app5
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - INSTANCE_NAME=app5
+      - app-instance=5
+    networks:
+      - haproxy-showcase-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'  # 10% of a core - reasonable constraint
+          memory: 128M
+        reservations:
+          cpus: '0.05'
+          memory: 64M
+
+  haproxy:
+    image: haproxy:2.8-alpine
+    container_name: haproxy-showcase-haproxy
+    networks:
+      - haproxy-showcase-network
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    depends_on:
+      - app1
+      - app2
+      - app3
+      - app4
+      - app5
+    ports:
+      - 80:80
+      - 8404:8404
+    restart: unless-stopped
+    # No CPU constraints - allow HAProxy to use multiple cores efficiently
+
+  # Locust instance for testing direct app access
+  locust-direct:
+    image: locustio/locust:2.29.1
+    container_name: haproxy-showcase-locust-direct
+    ports:
+      - "8089:8089"  # Direct app testing on port 8089
+    volumes:
+      - ./locustfile-direct.py:/mnt/locust/locustfile.py
+    networks:
+      - haproxy-showcase-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+    command: >
+      -f /mnt/locust/locustfile.py
+      --host=http://app0:3000
+      --users=200
+      --spawn-rate=100
+      --run-time=20s
+      --html=/tmp/locust_report_direct.html
+      --csv=/tmp/locust_data_direct
+
+  # Locust instance for testing HAProxy load balancing
+  locust-haproxy:
+    image: locustio/locust:2.29.1
+    container_name: haproxy-showcase-locust-haproxy
+    ports:
+      - "8090:8089"  # HAProxy testing on port 8090
+    volumes:
+      - ./locustfile-haproxy.py:/mnt/locust/locustfile.py
+    networks:
+      - haproxy-showcase-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+    command: >
+      -f /mnt/locust/locustfile.py
+      --host=http://haproxy:80
+      --users=200
+      --spawn-rate=100
+      --run-time=20s
+      --html=/tmp/locust_report_haproxy.html
+      --csv=/tmp/locust_data_haproxy
+
+networks:
+  haproxy-showcase-network:
