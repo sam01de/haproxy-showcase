@@ -21,14 +21,6 @@ app.get('/', async (req, res) => {
   });
 });
 
-app.get('/health', async (req, res) => {
-  res.json({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime()
-  });
-});
-
 app.get('/proxytest', async (req, res) => {
   const randomDelay = req.query.distributedelay === 'true'; //Boolean
   if(randomDelay && process.env.INSTANCE_NUM != null) {

@@ -1,3 +1,5 @@
+#---Complex example; won't work on this simple setup---#
+
 global
     daemon
     user haproxy
@@ -219,7 +221,6 @@ frontend websocket_frontend
     
     use_backend websocket_servers if is_websocket is_websocket_conn
     default_backend web_servers
-
 backend websocket_servers
     balance source
     option httpchk GET /ws/health
@@ -232,3 +233,4 @@ backend websocket_servers
     server ws1 10.0.1.70:8080 check
     server ws2 10.0.1.71:8080 check
     server ws3 10.0.1.72:8080 check
+

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 URL="http://localhost/proxytest?distributedelay=true"
-CONCURRENT_PROCESSES=5
+CONCURRENT_PROCESSES=10
 REQUESTS_PER_PROCESS=10
 TOTAL_REQUESTS=$((CONCURRENT_PROCESSES * REQUESTS_PER_PROCESS))
 OUTPUT_FILE="/tmp/test_results_$$.txt"
