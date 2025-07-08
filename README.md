@@ -1,11 +1,11 @@
 # HAProxy Showcase
 
-A hands-on demonstration project showcasing HAProxy load balancing capabilities with Node.js applications. This project runs multiple containerized Express.js servers to demonstrate various load balancing algorithms, routing rules, and performance characteristics.
+A hands-on demonstration project showcasing HAProxy load balancing capabilities. This project runs multiple containerized Express.js servers to demonstrate various load balancing algorithms, routing rules, and performance characteristics.
 
 ## Project Overview
 
 This showcase includes:
-- **6 Node.js Express applications** (app0-app5) running in Docker containers
+- **6 Node.js Express applications** (app0-app5) running in Docker containers, all limited in their ressources. 
 - **HAProxy load balancer** managing traffic to app1-app5
 - **app0** runs standalone for comparison (direct access)
 - **Locust load testing** tools for performance comparison
