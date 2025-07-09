@@ -28,7 +28,8 @@ app.get('/proxytest', async (req, res) => {
   } else {
     await simulateDelay(200);
   }
-  const message = process.env.INSTANCE_NUM != null ? 'Proxy used; Proxy Happy 😊  ||  Serving app instance: ' + process.env.INSTANCE_NUM : 'Proxy used; Proxy Happy 😊';
+  let message = process.env.INSTANCE_NUM != '0' ? 'Proxy used; Proxy Happy 😊' : 'Proxy not used; Proxy Unhappy 😢' ;
+  message += '||  Serving app instance: ' + process.env.INSTANCE_NUM
   res.json({
     message: message,
     timestamp: new Date().toISOString(),
